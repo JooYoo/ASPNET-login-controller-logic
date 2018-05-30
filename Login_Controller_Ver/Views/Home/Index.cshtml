@@ -2,9 +2,92 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-2">
+            @*leftside*@
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-6 ">
+            <div class="card row justify-content-center align-items-center shadow-lg p-3 mb-5 bg-white rounded" style="margin-top: 60px; padding-top: 80px; padding-bottom: 80px">
+                <div class="card-body ">
+                    @*Title*@
+                    <h4 class="card-title text-center mb-4 mt-1">Sign in</h4>
+                    <hr style="margin-bottom: 40px; margin-top: 40px">
+                    <p class="text-success text-center"> </p>
+
+                    @*LoginResult*@
+                    <div class="alert alert-danger" role="alert" style=" display: none">
+                        Failed
+                    </div>
+
+                    @MvcHtmlString.Create(ViewBag.LoginResult)
+
+                    @*@if (@ViewBag.LoginResult == "LogInSucceeded")
+                        {
+                            <div class="alert alert-success" role="alert" style="display: block">Login Succeed</div>
+                        }
+                        else if (@ViewBag.LoginResult == "LogInUnAuthorized")
+                        {
+                            <div class="alert alert-success" role="alert" style="display: block">Login Unauthorized</div>
+                        }
+                        else if (@ViewBag.LoginResult == "LogInFailed")
+                        {
+                            <div class="alert alert-danger" role="alert" style=" display: block">Login Failed</div>
+                        }*@
+
+
+                    <form action="@Url.Action("Index","Home")" method="post">
+                        @*Account*@
+                        <div class="form-group">
+                            <input id="AccountTx" name="Account" class="form-control" style="width:300px" placeholder="Email or login">
+                        </div> <!-- form-group// -->
+                        @*Password*@
+                        <div class="form-group">
+                            <input id="PasswordTx" name="Password" class="form-control" style="width:300px" placeholder="******" type="password">
+                        </div> <!-- form-group// -->
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="remember"> Remember Me
+                            </label>
+                        </div>
+
+                        <div class="form-group col-12">
+                            <Button id="SubmitBtn" type="submit" class="btn btn-primary btn-block" style="width: 250px; margin-top: 60px "> Login </Button>
+                        </div> <!-- form-group// -->
+                    </form>
+
+                    <p class="text-center"><a href="#" class="btn">Forgot password?</a></p>
+                </div>
+            </div> <!-- card.// -->
+        </div>
+        <div class="col-md-3">
+            @*right side*@
+        </div>
+    </div>
 </div>
 
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            // 在Account区域点按回车，直接跳进Password区域
+            $('#AccountTx').keypress(function (event) {
+                if (event.keyCode === 13 || event.which === 13) {
+                    $('#PasswordTx').focus();
+                    event.preventDefault();
+                }
+            });
+
+            // 在Password区域点按回车，直接点击按钮
+            $('#PasswordTx').keypress(function (event) {
+                if (event.keyCode === 13 || event.which === 13) {
+                    $('#SubmitBtn').click();
+                    event.preventDefault();
+                }
+            });
+        });
+
+    </script>
+}
